@@ -17,10 +17,10 @@ public class AuthorizedUserService {
         this.userRepo = userRepo;
     }
 
-    public List<AuthorizedUser> getAllUsers(){
-        log.info("getAllUsers called");
-        return this.userRepo.findAll();
-    }
+//    public List<AuthorizedUser> getAllUsers(){
+//        log.info("getAllUsers called");
+//        return this.userRepo.findAll();
+//    }
 
     public AuthorizedUser getUser(String username){
         return this.userRepo.findByUsername(username);

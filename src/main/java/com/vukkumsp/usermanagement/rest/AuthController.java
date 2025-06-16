@@ -40,26 +40,26 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @GetMapping("/test")
-    public String test(){
-        return "test success";
-    }
-
-    @GetMapping("/token")
-    public ResponseEntity<Map<String, String>> getAuthToken(){
-        HashMap<String, String> response = new HashMap<>();
-        response.put("token", jwt.generateToken("guest", null, ""));
-
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/verify")
-    public ResponseEntity<Map<String, String>> verifyToken(@RequestBody AuthRequest authRequest){
-        HashMap<String, String> response = new HashMap<>();
-        Jwt token = jwt.validateToken(authRequest.getToken());
-        response.put("username",token.getSubject());
-        response.put("token",token.toString());
-
-        return ResponseEntity.ok(response);
-    }
+//    @GetMapping("/test")
+//    public String test(){
+//        return "test success";
+//    }
+//
+//    @GetMapping("/token")
+//    public ResponseEntity<Map<String, String>> getAuthToken(){
+//        HashMap<String, String> response = new HashMap<>();
+//        response.put("token", jwt.generateToken("guest", null, ""));
+//
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    @PostMapping("/verify")
+//    public ResponseEntity<Map<String, String>> verifyToken(@RequestBody AuthRequest authRequest){
+//        HashMap<String, String> response = new HashMap<>();
+//        Jwt token = jwt.validateToken(authRequest.getToken());
+//        response.put("username",token.getSubject());
+//        response.put("token",token.toString());
+//
+//        return ResponseEntity.ok(response);
+//    }
 }

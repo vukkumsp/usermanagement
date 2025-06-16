@@ -38,17 +38,5 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .build();
-//        return http.csrf(ServerHttpSecurity.CsrfSpec::disable)
-//                .cors(Customizer.withDefaults())
-//
-//                .authorizeExchange(exchange -> exchange
-//                                .pathMatchers(HttpMethod.OPTIONS).permitAll()
-//                                .pathMatchers(HttpMethod.GET, "/api/token/guest").permitAll()
-//                                .pathMatchers(HttpMethod.GET, "/api/notes").hasRole("GUEST")
-//                                .pathMatchers(HttpMethod.POST, "/api/login").hasRole("GUEST")
-//                                .anyExchange()
-//                                .authenticated()
-//                )
-//                .build();
     }
 }
