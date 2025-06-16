@@ -21,4 +21,8 @@ public class AuthorizedUserService {
         log.info("getAllUsers called");
         return this.userRepo.findAll();
     }
+
+    public AuthorizedUser getUser(String username){
+        return this.userRepo.findByUsername(username);
+    }
 }

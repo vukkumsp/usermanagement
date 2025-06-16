@@ -22,21 +22,22 @@ public class DataSeeder {
     @PostConstruct
     public void seedData(){
         log.info("seeding data into database");
-//        jdbcTemplate.execute("DROP TABLE IF EXISTS authorized_user");
+        jdbcTemplate.execute("DROP TABLE IF EXISTS authorized_user");
         // 1. Create table if not exists
         jdbcTemplate.execute("""
             CREATE TABLE IF NOT EXISTS authorized_user (
                 id BIGINT PRIMARY KEY,
                 username VARCHAR(255),
-                password VARCHAR(255)
+                password VARCHAR(255),
+                app_name VARCHAR(255)
             )
         """);
         log.info("created authorized_user table if it doesn't exist");
         // 2. Seed data
         if(userRepo.count()==0){
-            userRepo.save(new AuthorizedUser(1L,"admin","admin"));
-            userRepo.save(new AuthorizedUser(2L,"test","test"));
-            userRepo.save(new AuthorizedUser(3L,"temp","temp"));
+            userRepo.save(new AuthorizedUser(1L,"admin","admin", "notes"));
+            userRepo.save(new AuthorizedUser(2L,"test","test", "notes"));
+            userRepo.save(new AuthorizedUser(3L,"temp","temp", "notes"));
             log.info("added test data into authorized_user if it doesn't have any data");
         }
         else{

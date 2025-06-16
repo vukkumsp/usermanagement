@@ -35,10 +35,10 @@ public class JwtService {
         this.decoder = NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
 
-    public String generateToken(String username, Map<String, Object> additionalClaims) {
+    public String generateToken(String username, Map<String, Object> additionalClaims, String appName) {
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer("your-app-name")
+                .issuer(appName)
                 .issuedAt(now)
                 .expiresAt(now.plus(1, ChronoUnit.HOURS))
                 .subject(username)

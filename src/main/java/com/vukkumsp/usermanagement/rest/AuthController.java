@@ -1,6 +1,10 @@
 package com.vukkumsp.usermanagement.rest;
 
+import com.vukkumsp.usermanagement.entity.AuthorizedUser;
+import com.vukkumsp.usermanagement.model.User;
+import com.vukkumsp.usermanagement.service.AuthorizedUserService;
 import com.vukkumsp.usermanagement.service.JwtService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +20,24 @@ import java.util.Objects;
 public class AuthController {
 
     private final JwtService jwt;
+    private final AuthorizedUserService userService;
 
-    public AuthController(JwtService jwt){
+    public AuthController(JwtService jwt, AuthorizedUserService userService){
         this.jwt = jwt;
+        this.userService = userService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody User user){
+        HashMap<String, String> response = new HashMap<>();
+        AuthorizedUser fetchedUser = this.userService.getUser(user.getUsername());
+        if(user.getPassword().equals(fetchedUser.getPassword())
+                && user.getAppName().equals(fetchedUser.getAppName())){
+            String token = jwt.generateToken(user.getUsername(), null, user.getAppName());
+            response.put("token", token);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @GetMapping("/test")
@@ -29,7 +48,7 @@ public class AuthController {
     @GetMapping("/token")
     public ResponseEntity<Map<String, String>> getAuthToken(){
         HashMap<String, String> response = new HashMap<>();
-        response.put("token", jwt.generateToken("guest", null));
+        response.put("token", jwt.generateToken("guest", null, ""));
 
         return ResponseEntity.ok(response);
     }

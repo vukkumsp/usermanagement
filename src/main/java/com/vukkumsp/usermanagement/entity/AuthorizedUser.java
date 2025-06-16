@@ -1,5 +1,6 @@
 package com.vukkumsp.usermanagement.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -16,6 +17,8 @@ public class AuthorizedUser {
     private Long id;
 
     private String username;
-
     private String password;
+
+    @Column(name = "app_name")
+    private String appName;
 }
