@@ -2,6 +2,7 @@ package com.vukkumsp.usermanagement.rest;
 
 import com.vukkumsp.usermanagement.service.JwtService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.parser.Entity;
@@ -36,7 +37,10 @@ public class AuthController {
     @PostMapping("/verify")
     public ResponseEntity<Map<String, String>> verifyToken(@RequestBody AuthRequest authRequest){
         HashMap<String, String> response = new HashMap<>();
-        response.put("username",jwt.validateToken(authRequest.getToken()).getSubject());
+        Jwt token = jwt.validateToken(authRequest.getToken());
+        response.put("username",token.getSubject());
+        response.put("token",token.toString());
+
         return ResponseEntity.ok(response);
     }
 }
