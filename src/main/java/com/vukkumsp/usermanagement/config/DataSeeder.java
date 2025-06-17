@@ -2,6 +2,7 @@ package com.vukkumsp.usermanagement.config;
 
 import com.vukkumsp.usermanagement.entity.AuthorizedUser;
 import com.vukkumsp.usermanagement.repository.AuthorizedUsersRepository;
+import com.vukkumsp.usermanagement.service.AuthorizedUserService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,11 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataSeeder {
 
-    private final AuthorizedUsersRepository userRepo;
+    private final AuthorizedUserService userService;
     private final JdbcTemplate jdbcTemplate;
 
-    public DataSeeder(AuthorizedUsersRepository userRepo, JdbcTemplate jdbcTemplate){
-        this.userRepo = userRepo;
+    public DataSeeder(AuthorizedUserService userService, JdbcTemplate jdbcTemplate){
+        this.userService = userService;
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -34,10 +35,10 @@ public class DataSeeder {
         """);
         log.info("created authorized_user table if it doesn't exist");
         // 2. Seed data
-        if(userRepo.count()==0){
-            userRepo.save(new AuthorizedUser(1L,"admin","admin", "notes-service"));
-            userRepo.save(new AuthorizedUser(2L,"test","test", "notes-service"));
-            userRepo.save(new AuthorizedUser(3L,"temp","temp", "notes-service"));
+        if(userService.count()==0){
+            userService.saveUser(new AuthorizedUser(1L,"admin","admin", "notes-service"));
+            userService.saveUser(new AuthorizedUser(2L,"test","test", "notes-service"));
+            userService.saveUser(new AuthorizedUser(3L,"temp","temp", "notes-service"));
             log.info("added test data into authorized_user if it doesn't have any data");
         }
         else{
