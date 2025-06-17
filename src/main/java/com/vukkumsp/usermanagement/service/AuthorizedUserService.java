@@ -4,6 +4,7 @@ import com.vukkumsp.usermanagement.entity.AuthorizedUser;
 import com.vukkumsp.usermanagement.model.User;
 import com.vukkumsp.usermanagement.repository.AuthorizedUsersRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,8 @@ import java.util.List;
 @Service
 public class AuthorizedUserService {
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     private final AuthorizedUsersRepository userRepo;
 
